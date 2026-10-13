@@ -1,0 +1,1253 @@
+{
+  "manifest_version": 1,
+  "type": "device",
+  "name": "Flipr",
+  "description": {
+    "en": "Flipr pool analyzer and Hub: water temperature, pH, chlorine, filtration, scenes, widget.",
+    "fr": "Analyseur de piscine Flipr et Hub : température, pH, chlore, filtration, scènes, widget.",
+    "de": "Flipr-Poolanalysator und Hub: Wassertemperatur, pH, Chlor, Filterung, Szenen, Widget.",
+    "es": "Analizador de piscina Flipr y Hub: temperatura, pH, cloro, filtración, escenas, widget."
+  },
+  "version": "0.1.0",
+  "docker_image": "ghcr.io/william-de71/gladys-flipr:0.1.0",
+  "gladys_version": ">=5.1.0",
+  "categories": ["environment", "appliances"],
+  "cover_image": "https://raw.githubusercontent.com/William-De71/gladys-flipr/main/cover.jpg",
+  "transports": ["cloud"],
+  "config_schema": [
+    {
+      "key": "intro",
+      "type": "section",
+      "label": {
+        "en": "Flipr account",
+        "fr": "Compte Flipr",
+        "de": "Flipr-Konto",
+        "es": "Cuenta Flipr"
+      },
+      "description": {
+        "en": "Enter the e-mail and the password you use in the Flipr app. The integration reads your measures from the Flipr cloud, like the app does: no data goes elsewhere.",
+        "fr": "Saisissez l’e-mail et le mot de passe que vous utilisez dans l’application Flipr. L’intégration lit vos mesures dans le cloud Flipr, comme le fait l’application : aucune donnée ne part ailleurs.",
+        "de": "Geben Sie die E-Mail und das Passwort ein, die Sie in der Flipr-App verwenden. Die Integration liest Ihre Messwerte aus der Flipr-Cloud, wie die App: Keine Daten gehen anderswohin.",
+        "es": "Introduzca el correo y la contraseña que usa en la aplicación Flipr. La integración lee sus medidas en la nube de Flipr, como hace la aplicación: ningún dato va a otro sitio."
+      }
+    },
+    {
+      "key": "email",
+      "type": "string",
+      "label": {
+        "en": "E-mail",
+        "fr": "E-mail",
+        "de": "E-Mail",
+        "es": "Correo electrónico"
+      },
+      "placeholder": {
+        "en": "you@example.com",
+        "fr": "vous@exemple.fr",
+        "de": "sie@beispiel.de",
+        "es": "usted@ejemplo.es"
+      },
+      "required": true
+    },
+    {
+      "key": "password",
+      "type": "secret",
+      "label": {
+        "en": "Password",
+        "fr": "Mot de passe",
+        "de": "Passwort",
+        "es": "Contraseña"
+      },
+      "required": true
+    },
+    {
+      "key": "options_intro",
+      "type": "section",
+      "label": {
+        "en": "Options",
+        "fr": "Options",
+        "de": "Optionen",
+        "es": "Opciones"
+      },
+      "description": {
+        "en": "A Flipr analyzer sends a measure about once an hour. Each reading costs one request per module to the Flipr cloud: there is no point reading it every few minutes.",
+        "fr": "Un analyseur Flipr envoie une mesure environ une fois par heure. Chaque lecture coûte une requête par module au cloud Flipr : inutile de le lire toutes les deux minutes.",
+        "de": "Ein Flipr-Analysator sendet etwa einmal pro Stunde eine Messung. Jedes Lesen kostet eine Anfrage pro Modul an die Flipr-Cloud: Es lohnt sich nicht, sie alle paar Minuten zu lesen.",
+        "es": "Un analizador Flipr envía una medida aproximadamente una vez por hora. Cada lectura cuesta una petición por módulo a la nube de Flipr: no tiene sentido leerla cada pocos minutos."
+      }
+    },
+    {
+      "key": "poll_interval",
+      "type": "number",
+      "label": {
+        "en": "Reading interval (min)",
+        "fr": "Intervalle de lecture (min)",
+        "de": "Leseintervall (Min.)",
+        "es": "Intervalo de lectura (min)"
+      },
+      "description": {
+        "en": "5 to 60 minutes, 15 by default.",
+        "fr": "De 5 à 60 minutes, 15 par défaut.",
+        "de": "5 bis 60 Minuten, standardmäßig 15.",
+        "es": "De 5 a 60 minutos, 15 por defecto."
+      },
+      "min": 5,
+      "max": 60,
+      "default": 15,
+      "required": false
+    },
+    {
+      "key": "language",
+      "type": "select",
+      "label": {
+        "en": "Language of the texts",
+        "fr": "Langue des textes",
+        "de": "Sprache der Texte",
+        "es": "Idioma de los textos"
+      },
+      "description": {
+        "en": "Feature names, filtration modes, water ratings and scene summaries. Automatic: the language of your dashboard, once the Flipr widget has been displayed.",
+        "fr": "Noms des fonctionnalités, modes de filtration, évaluations de l’eau et résumés des scènes. Automatique : la langue de votre tableau de bord, dès que le widget Flipr a été affiché.",
+        "de": "Namen der Funktionen, Filtermodi, Wasserbewertungen und Szenen-Zusammenfassungen. Automatisch: die Sprache Ihres Dashboards, sobald das Flipr-Widget angezeigt wurde.",
+        "es": "Nombres de las funciones, modos de filtración, valoraciones del agua y resúmenes de las escenas. Automático: el idioma de su panel, en cuanto se haya mostrado el widget de Flipr."
+      },
+      "options": [
+        {
+          "value": "auto",
+          "label": {
+            "en": "Automatic",
+            "fr": "Automatique",
+            "de": "Automatisch",
+            "es": "Automático"
+          }
+        },
+        {
+          "value": "en",
+          "label": {
+            "en": "English",
+            "fr": "English",
+            "de": "English",
+            "es": "English"
+          }
+        },
+        {
+          "value": "fr",
+          "label": {
+            "en": "Français",
+            "fr": "Français",
+            "de": "Français",
+            "es": "Français"
+          }
+        },
+        {
+          "value": "de",
+          "label": {
+            "en": "Deutsch",
+            "fr": "Deutsch",
+            "de": "Deutsch",
+            "es": "Deutsch"
+          }
+        },
+        {
+          "value": "es",
+          "label": {
+            "en": "Español",
+            "fr": "Español",
+            "de": "Español",
+            "es": "Español"
+          }
+        }
+      ],
+      "default": "auto",
+      "required": false
+    }
+  ],
+  "actions": [
+    {
+      "key": "test_connection",
+      "label": {
+        "en": "Test the connection",
+        "fr": "Tester la connexion",
+        "de": "Verbindung testen",
+        "es": "Probar la conexión"
+      },
+      "description": {
+        "en": "Signs in to Flipr and counts the analyzers and Hubs of the account.",
+        "fr": "Se connecte à Flipr et compte les analyseurs et Hubs du compte.",
+        "de": "Meldet sich bei Flipr an und zählt die Analysatoren und Hubs des Kontos.",
+        "es": "Inicia sesión en Flipr y cuenta los analizadores y Hubs de la cuenta."
+      },
+      "timeout_seconds": 30
+    }
+  ],
+  "widgets": [
+    {
+      "key": "pool",
+      "label": {
+        "en": "Pool water",
+        "fr": "Eau de la piscine",
+        "de": "Poolwasser",
+        "es": "Agua de la piscina"
+      },
+      "description": {
+        "en": "Temperature, pH, chlorine and redox, their history, what to do, and the filtration.",
+        "fr": "Température, pH, chlore et redox, leur historique, que faire, et la filtration.",
+        "de": "Temperatur, pH, Chlor und Redox, ihr Verlauf, was zu tun ist, und die Filterung.",
+        "es": "Temperatura, pH, cloro y redox, su historial, qué hacer, y la filtración."
+      },
+      "icon": "droplet",
+      "settings": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "label": {
+            "en": "Flipr analyzer",
+            "fr": "Analyseur Flipr",
+            "de": "Flipr-Analysator",
+            "es": "Analizador Flipr"
+          },
+          "description": {
+            "en": "Leave empty for the first analyzer of the account.",
+            "fr": "Laissez vide pour le premier analyseur du compte.",
+            "de": "Leer lassen für den ersten Analysator des Kontos.",
+            "es": "Déjelo vacío para el primer analizador de la cuenta."
+          },
+          "required": false
+        },
+        {
+          "key": "hub",
+          "type": "select",
+          "source": "devices",
+          "label": {
+            "en": "Flipr Hub",
+            "fr": "Flipr Hub",
+            "de": "Flipr Hub",
+            "es": "Flipr Hub"
+          },
+          "description": {
+            "en": "For the filtration row. Leave empty for the first Hub of the account.",
+            "fr": "Pour la ligne de filtration. Laissez vide pour le premier Hub du compte.",
+            "de": "Für die Filterzeile. Leer lassen für den ersten Hub des Kontos.",
+            "es": "Para la línea de filtración. Déjelo vacío para el primer Hub de la cuenta."
+          },
+          "required": false
+        },
+        {
+          "key": "chart",
+          "type": "select",
+          "label": {
+            "en": "Chart",
+            "fr": "Graphique",
+            "de": "Diagramm",
+            "es": "Gráfico"
+          },
+          "description": {
+            "en": "Shown once the analyzer device is created in Gladys.",
+            "fr": "Affiché dès que l’appareil de l’analyseur est créé dans Gladys.",
+            "de": "Wird angezeigt, sobald das Gerät des Analysators in Gladys angelegt ist.",
+            "es": "Se muestra en cuanto el dispositivo del analizador está creado en Gladys."
+          },
+          "options": [
+            {
+              "value": "temperature",
+              "label": {
+                "en": "Water temperature",
+                "fr": "Température de l’eau",
+                "de": "Wassertemperatur",
+                "es": "Temperatura del agua"
+              }
+            },
+            {
+              "value": "ph",
+              "label": {
+                "en": "pH",
+                "fr": "pH",
+                "de": "pH-Wert",
+                "es": "pH"
+              }
+            },
+            {
+              "value": "chlorine",
+              "label": {
+                "en": "Chlorine",
+                "fr": "Chlore",
+                "de": "Chlor",
+                "es": "Cloro"
+              }
+            },
+            {
+              "value": "redox",
+              "label": {
+                "en": "Redox",
+                "fr": "Redox",
+                "de": "Redox",
+                "es": "Redox"
+              }
+            },
+            {
+              "value": "none",
+              "label": {
+                "en": "No chart",
+                "fr": "Pas de graphique",
+                "de": "Kein Diagramm",
+                "es": "Sin gráfico"
+              }
+            }
+          ],
+          "default": "temperature",
+          "required": false
+        },
+        {
+          "key": "interval",
+          "type": "select",
+          "label": {
+            "en": "Chart period",
+            "fr": "Période du graphique",
+            "de": "Zeitraum des Diagramms",
+            "es": "Periodo del gráfico"
+          },
+          "options": [
+            {
+              "value": "last-day",
+              "label": {
+                "en": "Last 24 hours",
+                "fr": "Dernières 24 heures",
+                "de": "Letzte 24 Stunden",
+                "es": "Últimas 24 horas"
+              }
+            },
+            {
+              "value": "last-three-days",
+              "label": {
+                "en": "Last 3 days",
+                "fr": "3 derniers jours",
+                "de": "Letzte 3 Tage",
+                "es": "Últimos 3 días"
+              }
+            },
+            {
+              "value": "last-week",
+              "label": {
+                "en": "Last 7 days",
+                "fr": "7 derniers jours",
+                "de": "Letzte 7 Tage",
+                "es": "Últimos 7 días"
+              }
+            },
+            {
+              "value": "last-month",
+              "label": {
+                "en": "Last 30 days",
+                "fr": "30 derniers jours",
+                "de": "Letzte 30 Tage",
+                "es": "Últimos 30 días"
+              }
+            }
+          ],
+          "default": "last-week",
+          "required": false
+        }
+      ]
+    }
+  ],
+  "scene_triggers": [
+    {
+      "key": "new_measure",
+      "label": {
+        "en": "Flipr: new measure",
+        "fr": "Flipr : nouvelle mesure",
+        "de": "Flipr: neue Messung",
+        "es": "Flipr: nueva medida"
+      },
+      "description": {
+        "en": "The analyzer sent a new measure, about once an hour. Checked every 15 minutes by default.",
+        "fr": "L’analyseur a envoyé une nouvelle mesure, environ une fois par heure. Vérifié toutes les 15 minutes par défaut.",
+        "de": "Der Analysator hat eine neue Messung gesendet, etwa einmal pro Stunde. Standardmäßig alle 15 Minuten geprüft.",
+        "es": "El analizador envió una nueva medida, aproximadamente una vez por hora. Se comprueba cada 15 minutos por defecto."
+      },
+      "fields": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "label": {
+            "en": "Device",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Dispositivo"
+          },
+          "description": {
+            "en": "One of the Flipr analyzers. Leave empty for any analyzer.",
+            "fr": "Un des analyseurs Flipr. Laissez vide pour tous les analyseurs.",
+            "de": "Einer der Flipr-Analysatoren. Leer lassen für jeden Analysator.",
+            "es": "Uno de los analizadores Flipr. Déjelo vacío para cualquier analizador."
+          },
+          "required": false
+        }
+      ],
+      "variables": [
+        {
+          "key": "device_name",
+          "type": "string",
+          "label": {
+            "en": "Device name",
+            "fr": "Nom de l’appareil",
+            "de": "Gerätename",
+            "es": "Nombre del dispositivo"
+          }
+        },
+        {
+          "key": "temperature",
+          "type": "number",
+          "label": {
+            "en": "Water temperature (°C)",
+            "fr": "Température de l’eau (°C)",
+            "de": "Wassertemperatur (°C)",
+            "es": "Temperatura del agua (°C)"
+          }
+        },
+        {
+          "key": "ph",
+          "type": "number",
+          "label": {
+            "en": "pH",
+            "fr": "pH",
+            "de": "pH-Wert",
+            "es": "pH"
+          }
+        },
+        {
+          "key": "chlorine",
+          "type": "number",
+          "label": {
+            "en": "Chlorine (mg/L)",
+            "fr": "Chlore (mg/L)",
+            "de": "Chlor (mg/L)",
+            "es": "Cloro (mg/L)"
+          }
+        },
+        {
+          "key": "redox",
+          "type": "number",
+          "label": {
+            "en": "Redox (mV)",
+            "fr": "Redox (mV)",
+            "de": "Redox (mV)",
+            "es": "Redox (mV)"
+          }
+        },
+        {
+          "key": "battery",
+          "type": "number",
+          "label": {
+            "en": "Battery (%)",
+            "fr": "Batterie (%)",
+            "de": "Batterie (%)",
+            "es": "Batería (%)"
+          }
+        },
+        {
+          "key": "ph_status",
+          "type": "string",
+          "label": {
+            "en": "pH rating",
+            "fr": "Évaluation du pH",
+            "de": "pH-Bewertung",
+            "es": "Valoración del pH"
+          },
+          "description": {
+            "en": "too_low, low, ideal, high or too_high, as Flipr rates it.",
+            "fr": "too_low, low, ideal, high ou too_high, selon l’évaluation de Flipr.",
+            "de": "too_low, low, ideal, high oder too_high, wie Flipr es bewertet.",
+            "es": "too_low, low, ideal, high o too_high, según la valoración de Flipr."
+          }
+        },
+        {
+          "key": "chlorine_status",
+          "type": "string",
+          "label": {
+            "en": "Chlorine rating",
+            "fr": "Évaluation du chlore",
+            "de": "Chlor-Bewertung",
+            "es": "Valoración del cloro"
+          },
+          "description": {
+            "en": "too_low, low, ideal, high or too_high, as Flipr rates it.",
+            "fr": "too_low, low, ideal, high ou too_high, selon l’évaluation de Flipr.",
+            "de": "too_low, low, ideal, high oder too_high, wie Flipr es bewertet.",
+            "es": "too_low, low, ideal, high o too_high, según la valoración de Flipr."
+          }
+        },
+        {
+          "key": "measured_at",
+          "type": "string",
+          "label": {
+            "en": "Measured at",
+            "fr": "Mesuré à",
+            "de": "Gemessen um",
+            "es": "Medido a las"
+          },
+          "description": {
+            "en": "Date and time of the measure, ISO 8601 (UTC).",
+            "fr": "Date et heure de la mesure, ISO 8601 (UTC).",
+            "de": "Datum und Uhrzeit der Messung, ISO 8601 (UTC).",
+            "es": "Fecha y hora de la medida, ISO 8601 (UTC)."
+          }
+        },
+        {
+          "key": "summary",
+          "type": "string",
+          "label": {
+            "en": "Summary",
+            "fr": "Résumé",
+            "de": "Zusammenfassung",
+            "es": "Resumen"
+          },
+          "description": {
+            "en": "A sentence ready to put in a message.",
+            "fr": "Une phrase prête à mettre dans un message.",
+            "de": "Ein fertiger Satz für eine Nachricht.",
+            "es": "Una frase lista para poner en un mensaje."
+          }
+        }
+      ]
+    },
+    {
+      "key": "water_status_changed",
+      "label": {
+        "en": "Flipr: water rating changed",
+        "fr": "Flipr : évaluation de l’eau changée",
+        "de": "Flipr: Wasserbewertung geändert",
+        "es": "Flipr: valoración del agua cambiada"
+      },
+      "description": {
+        "en": "With a new measure, the pH or the chlorine moved to another rating: too low, slightly low, ideal, slightly high, too high.",
+        "fr": "Avec une nouvelle mesure, le pH ou le chlore a changé d’évaluation : trop bas, un peu bas, idéal, un peu haut, trop haut.",
+        "de": "Mit einer neuen Messung hat sich die Bewertung von pH oder Chlor geändert: zu niedrig, etwas niedrig, ideal, etwas hoch, zu hoch.",
+        "es": "Con una nueva medida, el pH o el cloro cambió de valoración: demasiado bajo, algo bajo, ideal, algo alto, demasiado alto."
+      },
+      "fields": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "label": {
+            "en": "Device",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Dispositivo"
+          },
+          "description": {
+            "en": "One of the Flipr analyzers. Leave empty for any analyzer.",
+            "fr": "Un des analyseurs Flipr. Laissez vide pour tous les analyseurs.",
+            "de": "Einer der Flipr-Analysatoren. Leer lassen für jeden Analysator.",
+            "es": "Uno de los analizadores Flipr. Déjelo vacío para cualquier analizador."
+          },
+          "required": false
+        },
+        {
+          "key": "parameter",
+          "type": "select",
+          "label": {
+            "en": "Parameter",
+            "fr": "Paramètre",
+            "de": "Parameter",
+            "es": "Parámetro"
+          },
+          "description": {
+            "en": "Leave empty for both.",
+            "fr": "Laissez vide pour les deux.",
+            "de": "Leer lassen für beide.",
+            "es": "Déjelo vacío para ambos."
+          },
+          "options": [
+            {
+              "value": "ph",
+              "label": {
+                "en": "pH",
+                "fr": "pH",
+                "de": "pH-Wert",
+                "es": "pH"
+              }
+            },
+            {
+              "value": "chlorine",
+              "label": {
+                "en": "Chlorine",
+                "fr": "Chlore",
+                "de": "Chlor",
+                "es": "Cloro"
+              }
+            }
+          ],
+          "required": false
+        },
+        {
+          "key": "status",
+          "type": "multi_select",
+          "label": {
+            "en": "New rating",
+            "fr": "Nouvelle évaluation",
+            "de": "Neue Bewertung",
+            "es": "Nueva valoración"
+          },
+          "description": {
+            "en": "Leave empty for any rating. Tick “Too low” and “Too high” for an alert.",
+            "fr": "Laissez vide pour toutes. Cochez « Trop bas » et « Trop haut » pour une alerte.",
+            "de": "Leer lassen für jede Bewertung. Für einen Alarm „Zu niedrig“ und „Zu hoch“ ankreuzen.",
+            "es": "Déjelo vacío para cualquier valoración. Marque «Demasiado bajo» y «Demasiado alto» para una alerta."
+          },
+          "options": [
+            {
+              "value": "too_low",
+              "label": {
+                "en": "Too low",
+                "fr": "Trop bas",
+                "de": "Zu niedrig",
+                "es": "Demasiado bajo"
+              }
+            },
+            {
+              "value": "low",
+              "label": {
+                "en": "Slightly low",
+                "fr": "Un peu bas",
+                "de": "Etwas niedrig",
+                "es": "Algo bajo"
+              }
+            },
+            {
+              "value": "ideal",
+              "label": {
+                "en": "Ideal",
+                "fr": "Idéal",
+                "de": "Ideal",
+                "es": "Ideal"
+              }
+            },
+            {
+              "value": "high",
+              "label": {
+                "en": "Slightly high",
+                "fr": "Un peu haut",
+                "de": "Etwas hoch",
+                "es": "Algo alto"
+              }
+            },
+            {
+              "value": "too_high",
+              "label": {
+                "en": "Too high",
+                "fr": "Trop haut",
+                "de": "Zu hoch",
+                "es": "Demasiado alto"
+              }
+            }
+          ],
+          "required": false
+        }
+      ],
+      "variables": [
+        {
+          "key": "device_name",
+          "type": "string",
+          "label": {
+            "en": "Device name",
+            "fr": "Nom de l’appareil",
+            "de": "Gerätename",
+            "es": "Nombre del dispositivo"
+          }
+        },
+        {
+          "key": "parameter",
+          "type": "string",
+          "label": {
+            "en": "Parameter",
+            "fr": "Paramètre",
+            "de": "Parameter",
+            "es": "Parámetro"
+          },
+          "description": {
+            "en": "ph or chlorine.",
+            "fr": "ph ou chlorine.",
+            "de": "ph oder chlorine.",
+            "es": "ph o chlorine."
+          }
+        },
+        {
+          "key": "status",
+          "type": "string",
+          "label": {
+            "en": "New rating",
+            "fr": "Nouvelle évaluation",
+            "de": "Neue Bewertung",
+            "es": "Nueva valoración"
+          },
+          "description": {
+            "en": "too_low, low, ideal, high or too_high, as Flipr rates it.",
+            "fr": "too_low, low, ideal, high ou too_high, selon l’évaluation de Flipr.",
+            "de": "too_low, low, ideal, high oder too_high, wie Flipr es bewertet.",
+            "es": "too_low, low, ideal, high o too_high, según la valoración de Flipr."
+          }
+        },
+        {
+          "key": "previous_status",
+          "type": "string",
+          "label": {
+            "en": "Previous rating",
+            "fr": "Évaluation précédente",
+            "de": "Vorherige Bewertung",
+            "es": "Valoración anterior"
+          },
+          "description": {
+            "en": "too_low, low, ideal, high or too_high, as Flipr rates it.",
+            "fr": "too_low, low, ideal, high ou too_high, selon l’évaluation de Flipr.",
+            "de": "too_low, low, ideal, high oder too_high, wie Flipr es bewertet.",
+            "es": "too_low, low, ideal, high o too_high, según la valoración de Flipr."
+          }
+        },
+        {
+          "key": "value",
+          "type": "number",
+          "label": {
+            "en": "Measured value",
+            "fr": "Valeur mesurée",
+            "de": "Messwert",
+            "es": "Valor medido"
+          }
+        },
+        {
+          "key": "summary",
+          "type": "string",
+          "label": {
+            "en": "Summary",
+            "fr": "Résumé",
+            "de": "Zusammenfassung",
+            "es": "Resumen"
+          },
+          "description": {
+            "en": "A sentence ready to put in a message.",
+            "fr": "Une phrase prête à mettre dans un message.",
+            "de": "Ein fertiger Satz für eine Nachricht.",
+            "es": "Una frase lista para poner en un mensaje."
+          }
+        }
+      ]
+    },
+    {
+      "key": "measures_stopped",
+      "label": {
+        "en": "Flipr: no measure for 24 hours",
+        "fr": "Flipr : aucune mesure depuis 24 heures",
+        "de": "Flipr: seit 24 Stunden keine Messung",
+        "es": "Flipr: sin medida desde hace 24 horas"
+      },
+      "description": {
+        "en": "The analyzer has sent nothing for 24 hours: flat battery, winter mode, network. Fired once, again after measures come back.",
+        "fr": "L’analyseur n’a rien envoyé depuis 24 heures : pile vide, mode hiver, réseau. Déclenché une fois, à nouveau après le retour des mesures.",
+        "de": "Der Analysator hat seit 24 Stunden nichts gesendet: leere Batterie, Wintermodus, Netz. Einmal ausgelöst, erneut nach der Rückkehr der Messungen.",
+        "es": "El analizador no ha enviado nada desde hace 24 horas: pila agotada, modo invierno, red. Se dispara una vez, de nuevo tras volver las medidas."
+      },
+      "fields": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "label": {
+            "en": "Device",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Dispositivo"
+          },
+          "description": {
+            "en": "One of the Flipr analyzers. Leave empty for any analyzer.",
+            "fr": "Un des analyseurs Flipr. Laissez vide pour tous les analyseurs.",
+            "de": "Einer der Flipr-Analysatoren. Leer lassen für jeden Analysator.",
+            "es": "Uno de los analizadores Flipr. Déjelo vacío para cualquier analizador."
+          },
+          "required": false
+        }
+      ],
+      "variables": [
+        {
+          "key": "device_name",
+          "type": "string",
+          "label": {
+            "en": "Device name",
+            "fr": "Nom de l’appareil",
+            "de": "Gerätename",
+            "es": "Nombre del dispositivo"
+          }
+        },
+        {
+          "key": "last_measure_at",
+          "type": "string",
+          "label": {
+            "en": "Latest measure at",
+            "fr": "Dernière mesure à",
+            "de": "Letzte Messung um",
+            "es": "Última medida a las"
+          },
+          "description": {
+            "en": "Date and time of the measure, ISO 8601 (UTC).",
+            "fr": "Date et heure de la mesure, ISO 8601 (UTC).",
+            "de": "Datum und Uhrzeit der Messung, ISO 8601 (UTC).",
+            "es": "Fecha y hora de la medida, ISO 8601 (UTC)."
+          }
+        },
+        {
+          "key": "hours",
+          "type": "number",
+          "label": {
+            "en": "Hours without measure",
+            "fr": "Heures sans mesure",
+            "de": "Stunden ohne Messung",
+            "es": "Horas sin medida"
+          }
+        },
+        {
+          "key": "summary",
+          "type": "string",
+          "label": {
+            "en": "Summary",
+            "fr": "Résumé",
+            "de": "Zusammenfassung",
+            "es": "Resumen"
+          },
+          "description": {
+            "en": "A sentence ready to put in a message.",
+            "fr": "Une phrase prête à mettre dans un message.",
+            "de": "Ein fertiger Satz für eine Nachricht.",
+            "es": "Una frase lista para poner en un mensaje."
+          }
+        }
+      ]
+    },
+    {
+      "key": "filtration_changed",
+      "label": {
+        "en": "Flipr Hub: filtration switched",
+        "fr": "Flipr Hub : filtration basculée",
+        "de": "Flipr Hub: Filterung umgeschaltet",
+        "es": "Flipr Hub: filtración conmutada"
+      },
+      "description": {
+        "en": "The Hub started or stopped the pump by itself (schedule, automatic mode, Flipr app). Not fired by the commands sent from Gladys.",
+        "fr": "Le Hub a démarré ou arrêté la pompe de lui-même (programmation, mode automatique, application Flipr). Pas déclenché par les commandes envoyées depuis Gladys.",
+        "de": "Der Hub hat die Pumpe selbst gestartet oder gestoppt (Zeitplan, Automatikmodus, Flipr-App). Nicht ausgelöst durch Befehle aus Gladys.",
+        "es": "El Hub arrancó o paró la bomba por sí mismo (programación, modo automático, aplicación Flipr). No se dispara con los comandos enviados desde Gladys."
+      },
+      "fields": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "label": {
+            "en": "Device",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Dispositivo"
+          },
+          "description": {
+            "en": "One of the Flipr Hubs. Leave empty for any Hub.",
+            "fr": "Un des Flipr Hub. Laissez vide pour tous les Hubs.",
+            "de": "Einer der Flipr Hubs. Leer lassen für jeden Hub.",
+            "es": "Uno de los Flipr Hub. Déjelo vacío para cualquier Hub."
+          },
+          "required": false
+        },
+        {
+          "key": "state",
+          "type": "select",
+          "label": {
+            "en": "Filtration",
+            "fr": "Filtration",
+            "de": "Filterung",
+            "es": "Filtración"
+          },
+          "description": {
+            "en": "Leave empty for both.",
+            "fr": "Laissez vide pour les deux.",
+            "de": "Leer lassen für beide.",
+            "es": "Déjelo vacío para ambos."
+          },
+          "options": [
+            {
+              "value": "on",
+              "label": {
+                "en": "Started",
+                "fr": "Démarrée",
+                "de": "Gestartet",
+                "es": "En marcha"
+              }
+            },
+            {
+              "value": "off",
+              "label": {
+                "en": "Stopped",
+                "fr": "Arrêtée",
+                "de": "Gestoppt",
+                "es": "Detenida"
+              }
+            }
+          ],
+          "required": false
+        }
+      ],
+      "variables": [
+        {
+          "key": "device_name",
+          "type": "string",
+          "label": {
+            "en": "Device name",
+            "fr": "Nom de l’appareil",
+            "de": "Gerätename",
+            "es": "Nombre del dispositivo"
+          }
+        },
+        {
+          "key": "state",
+          "type": "string",
+          "label": {
+            "en": "Filtration",
+            "fr": "Filtration",
+            "de": "Filterung",
+            "es": "Filtración"
+          },
+          "description": {
+            "en": "on or off.",
+            "fr": "on ou off.",
+            "de": "on oder off.",
+            "es": "on u off."
+          }
+        },
+        {
+          "key": "mode",
+          "type": "string",
+          "label": {
+            "en": "Mode",
+            "fr": "Mode",
+            "de": "Modus",
+            "es": "Modo"
+          },
+          "description": {
+            "en": "auto, manual or planning.",
+            "fr": "auto, manual ou planning.",
+            "de": "auto, manual oder planning.",
+            "es": "auto, manual o planning."
+          }
+        },
+        {
+          "key": "summary",
+          "type": "string",
+          "label": {
+            "en": "Summary",
+            "fr": "Résumé",
+            "de": "Zusammenfassung",
+            "es": "Resumen"
+          },
+          "description": {
+            "en": "A sentence ready to put in a message.",
+            "fr": "Une phrase prête à mettre dans un message.",
+            "de": "Ein fertiger Satz für eine Nachricht.",
+            "es": "Una frase lista para poner en un mensaje."
+          }
+        }
+      ]
+    }
+  ],
+  "scene_actions": [
+    {
+      "key": "get_measure",
+      "label": {
+        "en": "Flipr: read the latest measure",
+        "fr": "Flipr : lire la dernière mesure",
+        "de": "Flipr: letzte Messung lesen",
+        "es": "Flipr: leer la última medida"
+      },
+      "description": {
+        "en": "The latest measure of an analyzer, for a message or a condition.",
+        "fr": "La dernière mesure d’un analyseur, pour un message ou une condition.",
+        "de": "Die letzte Messung eines Analysators, für eine Nachricht oder eine Bedingung.",
+        "es": "La última medida de un analizador, para un mensaje o una condición."
+      },
+      "timeout_seconds": 30,
+      "fields": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "label": {
+            "en": "Device",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Dispositivo"
+          },
+          "description": {
+            "en": "Leave empty for the first analyzer of the account.",
+            "fr": "Laissez vide pour le premier analyseur du compte.",
+            "de": "Leer lassen für den ersten Analysator des Kontos.",
+            "es": "Déjelo vacío para el primer analizador de la cuenta."
+          },
+          "required": false
+        }
+      ],
+      "outputs": [
+        {
+          "key": "temperature",
+          "type": "number",
+          "label": {
+            "en": "Water temperature (°C)",
+            "fr": "Température de l’eau (°C)",
+            "de": "Wassertemperatur (°C)",
+            "es": "Temperatura del agua (°C)"
+          },
+          "description": {
+            "en": "-1 when Flipr did not send it.",
+            "fr": "-1 si Flipr ne l’a pas envoyé.",
+            "de": "-1, wenn Flipr es nicht gesendet hat.",
+            "es": "-1 si Flipr no lo ha enviado."
+          }
+        },
+        {
+          "key": "ph",
+          "type": "number",
+          "label": {
+            "en": "pH",
+            "fr": "pH",
+            "de": "pH-Wert",
+            "es": "pH"
+          },
+          "description": {
+            "en": "-1 when Flipr did not send it.",
+            "fr": "-1 si Flipr ne l’a pas envoyé.",
+            "de": "-1, wenn Flipr es nicht gesendet hat.",
+            "es": "-1 si Flipr no lo ha enviado."
+          }
+        },
+        {
+          "key": "chlorine",
+          "type": "number",
+          "label": {
+            "en": "Chlorine (mg/L)",
+            "fr": "Chlore (mg/L)",
+            "de": "Chlor (mg/L)",
+            "es": "Cloro (mg/L)"
+          },
+          "description": {
+            "en": "-1 when Flipr did not send it.",
+            "fr": "-1 si Flipr ne l’a pas envoyé.",
+            "de": "-1, wenn Flipr es nicht gesendet hat.",
+            "es": "-1 si Flipr no lo ha enviado."
+          }
+        },
+        {
+          "key": "redox",
+          "type": "number",
+          "label": {
+            "en": "Redox (mV)",
+            "fr": "Redox (mV)",
+            "de": "Redox (mV)",
+            "es": "Redox (mV)"
+          },
+          "description": {
+            "en": "-1 when Flipr did not send it.",
+            "fr": "-1 si Flipr ne l’a pas envoyé.",
+            "de": "-1, wenn Flipr es nicht gesendet hat.",
+            "es": "-1 si Flipr no lo ha enviado."
+          }
+        },
+        {
+          "key": "battery",
+          "type": "number",
+          "label": {
+            "en": "Battery (%)",
+            "fr": "Batterie (%)",
+            "de": "Batterie (%)",
+            "es": "Batería (%)"
+          },
+          "description": {
+            "en": "-1 when Flipr did not send it.",
+            "fr": "-1 si Flipr ne l’a pas envoyé.",
+            "de": "-1, wenn Flipr es nicht gesendet hat.",
+            "es": "-1 si Flipr no lo ha enviado."
+          }
+        },
+        {
+          "key": "ph_status",
+          "type": "string",
+          "label": {
+            "en": "pH rating",
+            "fr": "Évaluation du pH",
+            "de": "pH-Bewertung",
+            "es": "Valoración del pH"
+          },
+          "description": {
+            "en": "too_low, low, ideal, high or too_high, as Flipr rates it.",
+            "fr": "too_low, low, ideal, high ou too_high, selon l’évaluation de Flipr.",
+            "de": "too_low, low, ideal, high oder too_high, wie Flipr es bewertet.",
+            "es": "too_low, low, ideal, high o too_high, según la valoración de Flipr."
+          }
+        },
+        {
+          "key": "chlorine_status",
+          "type": "string",
+          "label": {
+            "en": "Chlorine rating",
+            "fr": "Évaluation du chlore",
+            "de": "Chlor-Bewertung",
+            "es": "Valoración del cloro"
+          },
+          "description": {
+            "en": "too_low, low, ideal, high or too_high, as Flipr rates it.",
+            "fr": "too_low, low, ideal, high ou too_high, selon l’évaluation de Flipr.",
+            "de": "too_low, low, ideal, high oder too_high, wie Flipr es bewertet.",
+            "es": "too_low, low, ideal, high o too_high, según la valoración de Flipr."
+          }
+        },
+        {
+          "key": "measured_at",
+          "type": "string",
+          "label": {
+            "en": "Measured at",
+            "fr": "Mesuré à",
+            "de": "Gemessen um",
+            "es": "Medido a las"
+          },
+          "description": {
+            "en": "Date and time of the measure, ISO 8601 (UTC).",
+            "fr": "Date et heure de la mesure, ISO 8601 (UTC).",
+            "de": "Datum und Uhrzeit der Messung, ISO 8601 (UTC).",
+            "es": "Fecha y hora de la medida, ISO 8601 (UTC)."
+          }
+        },
+        {
+          "key": "summary",
+          "type": "string",
+          "label": {
+            "en": "Summary",
+            "fr": "Résumé",
+            "de": "Zusammenfassung",
+            "es": "Resumen"
+          },
+          "description": {
+            "en": "A sentence ready to put in a message.",
+            "fr": "Une phrase prête à mettre dans un message.",
+            "de": "Ein fertiger Satz für eine Nachricht.",
+            "es": "Una frase lista para poner en un mensaje."
+          }
+        }
+      ]
+    },
+    {
+      "key": "set_filtration_mode",
+      "label": {
+        "en": "Flipr Hub: change the filtration mode",
+        "fr": "Flipr Hub : changer le mode de filtration",
+        "de": "Flipr Hub: Filtermodus ändern",
+        "es": "Flipr Hub: cambiar el modo de filtración"
+      },
+      "description": {
+        "en": "Automatic, manual or schedule, as in the Flipr app. To start or stop the pump, use the Filtration feature of the Hub device.",
+        "fr": "Automatique, manuel ou programmation, comme dans l’application Flipr. Pour démarrer ou arrêter la pompe, utilisez la fonctionnalité Filtration de l’appareil Hub.",
+        "de": "Automatisch, manuell oder Zeitplan, wie in der Flipr-App. Zum Starten oder Stoppen der Pumpe die Funktion Filterung des Hub-Geräts verwenden.",
+        "es": "Automático, manual o programación, como en la aplicación Flipr. Para arrancar o parar la bomba, use la función Filtración del dispositivo Hub."
+      },
+      "timeout_seconds": 30,
+      "fields": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "label": {
+            "en": "Device",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Dispositivo"
+          },
+          "description": {
+            "en": "Leave empty for the first Hub of the account.",
+            "fr": "Laissez vide pour le premier Hub du compte.",
+            "de": "Leer lassen für den ersten Hub des Kontos.",
+            "es": "Déjelo vacío para el primer Hub de la cuenta."
+          },
+          "required": false
+        },
+        {
+          "key": "mode",
+          "type": "select",
+          "label": {
+            "en": "Mode",
+            "fr": "Mode",
+            "de": "Modus",
+            "es": "Modo"
+          },
+          "options": [
+            {
+              "value": "auto",
+              "label": {
+                "en": "Automatic",
+                "fr": "Automatique",
+                "de": "Automatisch",
+                "es": "Automático"
+              }
+            },
+            {
+              "value": "manual",
+              "label": {
+                "en": "Manual",
+                "fr": "Manuel",
+                "de": "Manuell",
+                "es": "Manual"
+              }
+            },
+            {
+              "value": "planning",
+              "label": {
+                "en": "Schedule",
+                "fr": "Programmation",
+                "de": "Zeitplan",
+                "es": "Programación"
+              }
+            }
+          ],
+          "required": true
+        }
+      ],
+      "outputs": [
+        {
+          "key": "state",
+          "type": "string",
+          "label": {
+            "en": "Filtration",
+            "fr": "Filtration",
+            "de": "Filterung",
+            "es": "Filtración"
+          },
+          "description": {
+            "en": "on or off, empty when unknown.",
+            "fr": "on ou off, vide si inconnu.",
+            "de": "on oder off, leer wenn unbekannt.",
+            "es": "on u off, vacío si se desconoce."
+          }
+        },
+        {
+          "key": "mode",
+          "type": "string",
+          "label": {
+            "en": "Mode",
+            "fr": "Mode",
+            "de": "Modus",
+            "es": "Modo"
+          },
+          "description": {
+            "en": "auto, manual or planning.",
+            "fr": "auto, manual ou planning.",
+            "de": "auto, manual oder planning.",
+            "es": "auto, manual o planning."
+          }
+        }
+      ]
+    }
+  ]
+}

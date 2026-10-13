@@ -1,0 +1,356 @@
+{
+  "devices": {
+    "analyzer": {
+      "external_id": "ext:flipr:analyzer:AB256C",
+      "should_poll": false,
+      "params": ["FLIPR_SERIAL", "FLIPR_MODEL"],
+      "features": [
+        {
+          "external_id": "ext:flipr:analyzer:AB256C:temperature",
+          "category": "temperature-sensor",
+          "type": "decimal",
+          "unit": "celsius",
+          "min": -10,
+          "max": 50,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:flipr:analyzer:AB256C:ph",
+          "category": "ph-sensor",
+          "type": "decimal",
+          "unit": "ph",
+          "min": 0,
+          "max": 14,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:flipr:analyzer:AB256C:chlorine",
+          "category": "level-sensor",
+          "type": "decimal",
+          "unit": "ppm",
+          "min": 0,
+          "max": 10,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:flipr:analyzer:AB256C:redox",
+          "category": "orp-sensor",
+          "type": "decimal",
+          "unit": "millivolt",
+          "min": 0,
+          "max": 1000,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:flipr:analyzer:AB256C:battery",
+          "category": "battery",
+          "type": "integer",
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:flipr:analyzer:AB256C:ph_status",
+          "category": "text",
+          "type": "text",
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:flipr:analyzer:AB256C:chlorine_status",
+          "category": "text",
+          "type": "text",
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        }
+      ],
+      "options": []
+    },
+    "hub": {
+      "external_id": "ext:flipr:hub:CD256C",
+      "should_poll": false,
+      "params": ["FLIPR_SERIAL", "FLIPR_MODEL"],
+      "features": [
+        {
+          "external_id": "ext:flipr:hub:CD256C:filtration",
+          "category": "switch",
+          "type": "binary",
+          "min": 0,
+          "max": 1,
+          "read_only": false,
+          "has_feedback": true
+        },
+        {
+          "external_id": "ext:flipr:hub:CD256C:mode",
+          "category": "text",
+          "type": "select",
+          "min": 0,
+          "max": 0,
+          "read_only": false,
+          "has_feedback": true
+        }
+      ],
+      "options": ["auto", "manual", "planning"]
+    }
+  },
+  "manifest": {
+    "config_schema": [
+      {
+        "key": "intro",
+        "type": "section"
+      },
+      {
+        "key": "email",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "type": "secret"
+      },
+      {
+        "key": "options_intro",
+        "type": "section"
+      },
+      {
+        "key": "poll_interval",
+        "type": "number"
+      },
+      {
+        "key": "language",
+        "type": "select"
+      }
+    ],
+    "scene_triggers": [
+      {
+        "key": "new_measure",
+        "fields": [
+          {
+            "key": "device",
+            "options": []
+          }
+        ],
+        "variables": [
+          {
+            "key": "device_name",
+            "type": "string"
+          },
+          {
+            "key": "temperature",
+            "type": "number"
+          },
+          {
+            "key": "ph",
+            "type": "number"
+          },
+          {
+            "key": "chlorine",
+            "type": "number"
+          },
+          {
+            "key": "redox",
+            "type": "number"
+          },
+          {
+            "key": "battery",
+            "type": "number"
+          },
+          {
+            "key": "ph_status",
+            "type": "string"
+          },
+          {
+            "key": "chlorine_status",
+            "type": "string"
+          },
+          {
+            "key": "measured_at",
+            "type": "string"
+          },
+          {
+            "key": "summary",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "key": "water_status_changed",
+        "fields": [
+          {
+            "key": "device",
+            "options": []
+          },
+          {
+            "key": "parameter",
+            "options": ["ph", "chlorine"]
+          },
+          {
+            "key": "status",
+            "options": ["too_low", "low", "ideal", "high", "too_high"]
+          }
+        ],
+        "variables": [
+          {
+            "key": "device_name",
+            "type": "string"
+          },
+          {
+            "key": "parameter",
+            "type": "string"
+          },
+          {
+            "key": "status",
+            "type": "string"
+          },
+          {
+            "key": "previous_status",
+            "type": "string"
+          },
+          {
+            "key": "value",
+            "type": "number"
+          },
+          {
+            "key": "summary",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "key": "measures_stopped",
+        "fields": [
+          {
+            "key": "device",
+            "options": []
+          }
+        ],
+        "variables": [
+          {
+            "key": "device_name",
+            "type": "string"
+          },
+          {
+            "key": "last_measure_at",
+            "type": "string"
+          },
+          {
+            "key": "hours",
+            "type": "number"
+          },
+          {
+            "key": "summary",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "key": "filtration_changed",
+        "fields": [
+          {
+            "key": "device",
+            "options": []
+          },
+          {
+            "key": "state",
+            "options": ["on", "off"]
+          }
+        ],
+        "variables": [
+          {
+            "key": "device_name",
+            "type": "string"
+          },
+          {
+            "key": "state",
+            "type": "string"
+          },
+          {
+            "key": "mode",
+            "type": "string"
+          },
+          {
+            "key": "summary",
+            "type": "string"
+          }
+        ]
+      }
+    ],
+    "scene_actions": [
+      {
+        "key": "get_measure",
+        "fields": ["device"],
+        "outputs": [
+          {
+            "key": "temperature",
+            "type": "number"
+          },
+          {
+            "key": "ph",
+            "type": "number"
+          },
+          {
+            "key": "chlorine",
+            "type": "number"
+          },
+          {
+            "key": "redox",
+            "type": "number"
+          },
+          {
+            "key": "battery",
+            "type": "number"
+          },
+          {
+            "key": "ph_status",
+            "type": "string"
+          },
+          {
+            "key": "chlorine_status",
+            "type": "string"
+          },
+          {
+            "key": "measured_at",
+            "type": "string"
+          },
+          {
+            "key": "summary",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "key": "set_filtration_mode",
+        "fields": ["device", "mode"],
+        "outputs": [
+          {
+            "key": "state",
+            "type": "string"
+          },
+          {
+            "key": "mode",
+            "type": "string"
+          }
+        ]
+      }
+    ],
+    "widgets": [
+      {
+        "key": "pool",
+        "settings": ["device", "hub", "chart", "interval"],
+        "options": {
+          "chart": ["temperature", "ph", "chlorine", "redox", "none"],
+          "interval": ["last-day", "last-three-days", "last-week", "last-month"]
+        }
+      }
+    ]
+  }
+}

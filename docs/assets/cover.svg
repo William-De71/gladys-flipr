@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="534" viewBox="0 0 800 534">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0b2545"/>
+      <stop offset="1" stop-color="#13315c"/>
+    </linearGradient>
+    <linearGradient id="water" gradientUnits="userSpaceOnUse" x1="0" y1="290" x2="0" y2="534">
+      <stop offset="0" stop-color="#1b98e0"/>
+      <stop offset="1" stop-color="#0b5ea8"/>
+    </linearGradient>
+    <linearGradient id="buoy" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#e8eef5"/>
+      <stop offset="0.5" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#cfd9e4"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="534" fill="url(#sky)"/>
+  <!-- pool water -->
+  <path d="M0 300 C 80 285, 160 315, 240 300 S 400 285, 480 300 S 640 315, 720 300 S 800 290, 800 290 V 534 H 0 Z" fill="url(#water)"/>
+  <g fill="none" stroke="#7fd1ff" stroke-width="3" stroke-linecap="round" opacity="0.55">
+    <path d="M40 360 c 30 -10, 60 10, 90 0 s 60 -10, 90 0"/>
+    <path d="M300 410 c 30 -10, 60 10, 90 0 s 60 -10, 90 0"/>
+    <path d="M90 470 c 30 -10, 60 10, 90 0 s 60 -10, 90 0"/>
+    <path d="M560 450 c 30 -10, 60 10, 90 0 s 60 -10, 90 0"/>
+  </g>
+  <!-- floating analyzer (illustration) -->
+  <g transform="translate(600 345)">
+        <path d="M-40 -150 h80 a14 14 0 0 1 14 14 v140 a54 26 0 0 1 -108 0 v-140 a14 14 0 0 1 14 -14 z" fill="url(#buoy)" stroke="#9fb3c8" stroke-width="3"/>
+    <rect x="-54" y="-70" width="108" height="26" fill="#1b98e0"/>
+    <circle cx="0" cy="-112" r="15" fill="#13315c"/>
+    <circle cx="0" cy="-112" r="6" fill="#3ddc97"/>
+  </g>
+  <!-- the water line over the lower half of the analyzer -->
+  <path d="M480 300 C 520 296, 560 304, 600 300 S 680 296, 720 300 V 534 H 480 Z" fill="url(#water)" opacity="0.85"/>
+  <path d="M540 318 C 560 312, 580 324, 600 318 S 640 312, 660 318" fill="none" stroke="#7fd1ff" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+  <!-- measures -->
+  <g font-family="DejaVu Sans, Arial, sans-serif" font-weight="bold">
+    <g transform="translate(70 215)">
+      <rect width="150" height="56" rx="28" fill="#ffffff" opacity="0.95"/>
+      <text x="75" y="37" font-size="26" fill="#0b5ea8" text-anchor="middle">26.4 °C</text>
+    </g>
+    <g transform="translate(240 215)">
+      <rect width="130" height="56" rx="28" fill="#ffffff" opacity="0.95"/>
+      <text x="65" y="37" font-size="26" fill="#1e8e5a" text-anchor="middle">pH 7.2</text>
+    </g>
+    <g transform="translate(390 215)">
+      <rect width="120" height="56" rx="28" fill="#ffffff" opacity="0.95"/>
+      <text x="60" y="37" font-size="26" fill="#1e8e5a" text-anchor="middle">Cl 1.2</text>
+    </g>
+  </g>
+  <text x="70" y="110" font-family="DejaVu Sans, Arial, sans-serif" font-size="64" font-weight="bold" fill="#f0f6fc">Flipr</text>
+  <text x="72" y="160" font-family="DejaVu Sans, Arial, sans-serif" font-size="28" fill="#a9c4e4">for Gladys Assistant</text>
+  <text x="70" y="500" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" fill="#e6f3ff">Temperature · pH · Chlorine · Redox · Filtration</text>
+</svg>
