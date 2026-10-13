@@ -5,7 +5,7 @@ follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions
 follow [Semantic Versioning](https://semver.org/). This file is generated at
 each release from the Conventional Commits: do not edit it by hand.
 
-## [0.1.0] - unreleased
+## [0.1.0] - 2026-10-13
 
 ### Added
 
@@ -16,3 +16,5 @@ each release from the Conventional Commits: do not edit it by hand.
 - Dashboard widget "Pool water": temperature, pH, chlorine and redox tiles colored by their rating, the history of one value, what to do, the ratings, the battery and the filtration.
 - Configuration with the e-mail and the password of the Flipr app, a reading interval from 5 to 60 minutes and a "Test the connection" button.
 - English, French, German and Spanish everywhere: settings, devices, widget, scenes and documentation.
+
+[0.1.0]: https://github.com/William-De71/gladys-flipr/releases/tag/v0.1.0
