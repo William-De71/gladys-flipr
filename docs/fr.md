@@ -15,7 +15,7 @@ Flipr n’a pas d’API locale : l’analyseur envoie ses mesures au cloud Flipr
 
 ## Prérequis
 
-- Gladys Assistant 5.1.0 ou plus récent.
+- Gladys Assistant 5.3.0 ou plus récent.
 - Un analyseur Flipr (Start, AnalysR…) qui fonctionne déjà dans l’application mobile Flipr, et éventuellement un Flipr Hub.
 - L’e-mail et le mot de passe de votre compte Flipr.
 

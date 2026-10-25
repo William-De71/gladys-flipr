@@ -5,7 +5,7 @@
 [![Licencia: Apache-2.0](https://img.shields.io/badge/licencia-Apache--2.0-blue.svg)](LICENSE)
 [![Última versión](https://img.shields.io/github/v/release/William-De71/gladys-flipr?sort=semver)](https://github.com/William-De71/gladys-flipr/releases)
 [![CI](https://img.shields.io/github/actions/workflow/status/William-De71/gladys-flipr/release.yml?branch=main&label=CI)](https://github.com/William-De71/gladys-flipr/actions/workflows/release.yml)
-[![Gladys](https://img.shields.io/badge/Gladys-%E2%89%A5%205.1.0-2f6fb5)](https://gladysassistant.com)
+[![Gladys](https://img.shields.io/badge/Gladys-%E2%89%A5%205.3.0-2f6fb5)](https://gladysassistant.com)
 
 ![Flipr para Gladys Assistant](cover.jpg)
 
@@ -100,7 +100,7 @@ Ejemplos de escenas:
 
 ## Requisitos
 
-- Gladys Assistant **5.1.0** o posterior (widgets y escenas de las integraciones externas). Las instancias más antiguas no pueden instalarla.
+- Gladys Assistant **5.3.0** o posterior (palabras clave y países del catálogo de Gladys 5.3, widgets y escenas de las integraciones externas). Las instancias más antiguas no pueden instalarla.
 - Un analizador Flipr (y opcionalmente un Flipr Hub) que ya funcione en la aplicación Flipr, con su correo y su contraseña.
 
 ## Instalación
