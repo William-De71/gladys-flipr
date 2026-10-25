@@ -5,6 +5,12 @@ follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions
 follow [Semantic Versioning](https://semver.org/). This file is generated at
 each release from the Conventional Commits: do not edit it by hand.
 
+## [0.2.0] - 2026-10-25
+
+### Added
+
+- require Gladys 5.3 and declare catalog keywords ([677891e](https://github.com/William-De71/gladys-flipr/commit/677891e1c13cf27cfef20c47414efcd9f9f27406))
+
 ## [0.1.1] - 2026-10-24
 
 ### Security
@@ -23,5 +29,6 @@ each release from the Conventional Commits: do not edit it by hand.
 - Configuration with the e-mail and the password of the Flipr app, a reading interval from 5 to 60 minutes and a "Test the connection" button.
 - English, French, German and Spanish everywhere: settings, devices, widget, scenes and documentation.
 
+[0.2.0]: https://github.com/William-De71/gladys-flipr/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/William-De71/gladys-flipr/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/William-De71/gladys-flipr/releases/tag/v0.1.0
